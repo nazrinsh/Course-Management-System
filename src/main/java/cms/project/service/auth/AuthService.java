@@ -2,7 +2,7 @@ package cms.project.service.auth;
 
 
 
-import cms.project.dto.JwtAuthResponse;
+import cms.project.dto.response.JwtAuthResponse;
 import cms.project.dto.request.LogInRequest;
 import cms.project.dto.request.SignUpRequest;
 import cms.project.enums.UserRole;

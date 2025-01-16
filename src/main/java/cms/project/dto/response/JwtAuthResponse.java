@@ -1,4 +1,4 @@
-package cms.project.dto;
+package cms.project.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
