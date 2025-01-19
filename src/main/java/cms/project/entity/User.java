@@ -1,4 +1,4 @@
-package cms.project.model.entity;
+package cms.project.entity;
 
 
 import cms.project.enums.Status;
@@ -11,6 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Entity
 @Getter
@@ -35,6 +36,9 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     Status status;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    List<Course> enrolledCourses;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

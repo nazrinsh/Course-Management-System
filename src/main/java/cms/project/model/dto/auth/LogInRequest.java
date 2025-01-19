@@ -1,4 +1,4 @@
-package cms.project.dto.request;
+package cms.project.model.dto.auth;
 
 
 import jakarta.validation.constraints.Email;

@@ -2,12 +2,13 @@ package cms.project.service.auth;
 
 
 
-import cms.project.dto.response.JwtAuthResponse;
-import cms.project.dto.request.LogInRequest;
-import cms.project.dto.request.SignUpRequest;
+import cms.project.model.dto.auth.JwtAuthResponse;
+import cms.project.model.dto.auth.LogInRequest;
+import cms.project.model.dto.auth.SignUpRequest;
+
 import cms.project.enums.UserRole;
 import cms.project.enums.Status;
-import cms.project.model.entity.User;
+import cms.project.entity.User;
 import cms.project.exceptions.*;
 import jakarta.transaction.Transactional;
 import cms.project.repository.UserRepository;

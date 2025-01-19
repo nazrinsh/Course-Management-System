@@ -1,8 +1,8 @@
 package cms.project.controller.auth;
 
-import cms.project.dto.response.JwtAuthResponse;
-import cms.project.dto.request.LogInRequest;
-import cms.project.dto.request.SignUpRequest;
+import cms.project.model.dto.auth.JwtAuthResponse;
+import cms.project.model.dto.auth.LogInRequest;
+import cms.project.model.dto.auth.SignUpRequest;
 import cms.project.service.auth.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
