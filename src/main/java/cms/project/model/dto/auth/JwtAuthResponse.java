@@ -1,4 +1,4 @@
-package cms.project.dto;
+package cms.project.model.dto.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

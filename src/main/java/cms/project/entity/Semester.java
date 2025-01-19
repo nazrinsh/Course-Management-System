@@ -1,4 +1,4 @@
-package cms.project.model.entity;
+package cms.project.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;

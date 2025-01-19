@@ -41,5 +41,5 @@ public class SecurityConfiguration {
 
     public static String[] permitAll = { "/auth/**" };
     public static String[] teacher = {};
-    public static String[] student = {};
+    public static String[] student = {"/course/enroll"};
 }
