@@ -2,14 +2,11 @@ package cms.project.entity;
 
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
-
+@Builder
 @Entity
 @Data
 @AllArgsConstructor
@@ -30,12 +27,12 @@ public class Exam {
     LocalDateTime examEndDate;
 
     @ManyToOne
-    @JoinColumn(name = "course_name")
+    @JoinColumn(name = "course_id", nullable = false)
     Course course;
 
     @ManyToOne
-    @JoinColumn(name = "instructor_id")
-    User instructor;
+    @JoinColumn(name = "teacher_id")
+    User teacher;
 
     Long score;
 

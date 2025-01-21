@@ -1,5 +1,8 @@
 package cms.project.model.dto.course;
+
 import cms.project.entity.Semester;
+import cms.project.entity.User;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -9,8 +12,10 @@ import lombok.experimental.FieldDefaults;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CourseDto {
-    Long courseId;
+    @NotNull(message = "Course name cannot be null")
     String courseName;
-    String instructorName;
-    Semester semester;
+
+    @NotNull(message = "Semester cannot be null")
+    Long semesterId;
+
 }

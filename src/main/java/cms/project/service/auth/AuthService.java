@@ -1,7 +1,5 @@
 package cms.project.service.auth;
 
-
-
 import cms.project.model.dto.auth.JwtAuthResponse;
 import cms.project.model.dto.auth.LogInRequest;
 import cms.project.model.dto.auth.SignUpRequest;
@@ -12,7 +10,6 @@ import cms.project.exceptions.*;
 import jakarta.transaction.Transactional;
 import cms.project.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,11 +23,11 @@ public class AuthService {
     @Transactional
     public JwtAuthResponse register(SignUpRequest signUpRequest) {
         if (!signUpRequest.getPassword().equals(signUpRequest.getRepeatPassword())) {
-            throw new PasswordInvalidException("PASSWORD_MISMATCH", "Passwords do not match");
+            throw new PasswordInvalidException("Passwords do not match");
         }
 
         if (userRepository.findByEmail(signUpRequest.getEmail()).isPresent()) {
-            throw new UserEmailExistsException(HttpStatus.BAD_REQUEST.name(), "Email already exists");
+            throw new UserEmailExistsException("Email already exists");
         }
 
         Status userStatus = signUpRequest.getRole().equals(UserRole.STUDENT) ? Status.APPROVED : Status.PENDING;
@@ -55,10 +52,10 @@ public class AuthService {
 
     public JwtAuthResponse login(LogInRequest request) {
         User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new UserNotFoundException(HttpStatus.NOT_FOUND.name(), "User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new UserNotFoundException(HttpStatus.NOT_FOUND.name(), "Invalid username or password");
+            throw new UserNotFoundException("Invalid username or password");
         }
 
         String accessToken = jwtService.generateToken(user);
