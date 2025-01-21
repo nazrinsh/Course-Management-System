@@ -39,7 +39,7 @@ public class SecurityConfiguration {
             "/webjars/**"
     };
 
-    public static String[] permitAll = { "/auth/**" };
-    public static String[] teacher = {};
+    public static String[] permitAll = {"/auth/**"};
+    public static String[] teacher = {"/course/createCourse", "/course/createExam"};
     public static String[] student = {"/course/enroll"};
 }

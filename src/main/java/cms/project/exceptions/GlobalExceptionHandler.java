@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.HashMap;
@@ -17,32 +16,24 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse handleUserNotFoundException(UserNotFoundException exception) {
-        return ErrorResponse.builder()
-                .errorCode(HttpStatus.NOT_FOUND.name())
-                .message(exception.getMessage())
-                .build();
+    public ResponseEntity<ErrorResponse> handleUserNotFoundException(UserNotFoundException exception) {
+        ErrorResponse errorResponse = new ErrorResponse("NOT_FOUND", exception.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+
     }
 
-
     @ExceptionHandler(UserEmailExistsException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleUserEmailExistsException(UserEmailExistsException exception) {
-        return ErrorResponse.builder()
-                .errorCode(HttpStatus.BAD_REQUEST.name())
-                .message(exception.getMessage())
-                .build();
+    public ResponseEntity<ErrorResponse> handleUserEmailExistsException(UserEmailExistsException exception) {
+        ErrorResponse errorResponse = new ErrorResponse("BAD_REQUEST", exception.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
 
     @ExceptionHandler(PasswordInvalidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handlePasswordInvalidException(PasswordInvalidException exception) {
-        return ErrorResponse.builder()
-                .errorCode(HttpStatus.BAD_REQUEST.name())
-                .message(exception.getMessage())
-                .build();
+    public ResponseEntity<ErrorResponse> handlePasswordInvalidException(PasswordInvalidException exception) {
+        ErrorResponse errorResponse = new ErrorResponse("BAD_REQUEST", exception.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -52,5 +43,23 @@ public class GlobalExceptionHandler {
             errors.put(error.getField(), error.getDefaultMessage());
         }
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(CourseLimitException.class)
+    public ResponseEntity<ErrorResponse> handleCourseLimitException(CourseLimitException ex) {
+        ErrorResponse errorResponse = new ErrorResponse("EXPECTATION_FAILED", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.EXPECTATION_FAILED);
+    }
+
+    @ExceptionHandler(CourseNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleCourseNotFoundException(CourseLimitException ex) {
+        ErrorResponse errorResponse = new ErrorResponse("NOT_FOUND", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(UnauthorizedTeacherException.class)
+    public ResponseEntity<ErrorResponse> handleUnauthorizedTeacherException(UnauthorizedTeacherException ex) {
+        ErrorResponse errorResponse = new ErrorResponse("FORBIDDEN", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
     }
 }

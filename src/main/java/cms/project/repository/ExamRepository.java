@@ -1,13 +1,9 @@
 package cms.project.repository;
 
-import cms.project.entity.Course;
+import cms.project.entity.Exam;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
-public interface CourseRepository extends JpaRepository<Course, Long> {
-
-
+public interface ExamRepository  extends JpaRepository<Exam, Long> {
 }

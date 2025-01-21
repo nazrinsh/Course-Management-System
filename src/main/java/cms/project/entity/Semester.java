@@ -1,5 +1,6 @@
 package cms.project.entity;
 
+import cms.project.enums.Semesters;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -7,21 +8,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "Semesters")
+@Table(name = "Semester")
 public class Semester {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    Long semesterId;
 
-    String name;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "semester")
+    Semesters semester;
 
 }

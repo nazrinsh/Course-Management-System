@@ -22,8 +22,8 @@ public class Course {
     String courseName;
 
     @ManyToOne
-    @JoinColumn(name = "instructor_id")
-    User instructor;
+    @JoinColumn(name = "teacher_id")
+    User teacher;
 
     @ManyToMany
     @JoinTable(
@@ -34,7 +34,7 @@ public class Course {
     private List<User> students;
 
     @ManyToOne
-    @JoinColumn(name = "semester_id")
+    @JoinColumn(name = "semester_id", nullable = false)
     Semester semester;
 
 

@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: admin
+      author: cms
+      changes:
+        - sql:
+            sql: |
+              INSERT INTO semester (
+              semester) VALUES ('FALL'), ('SPRING');

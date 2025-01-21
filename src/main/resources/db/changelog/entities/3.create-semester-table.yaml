@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: admin
+      author: cms
+      changes:
+        - createTable:
+            tableName: semester
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: semester
+                  type: varchar(255)
