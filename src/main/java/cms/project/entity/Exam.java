@@ -6,6 +6,10 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Builder
 @Entity
 @Data
@@ -16,14 +20,11 @@ import java.time.LocalDateTime;
 public class Exam {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long examId;
-
-    @Column(nullable = false)
     String examName;
 
     LocalDateTime examStartDate;
-
     LocalDateTime examEndDate;
 
     @ManyToOne
@@ -34,6 +35,12 @@ public class Exam {
     @JoinColumn(name = "teacher_id")
     User teacher;
 
-    Long score;
+    @ManyToMany
+    @JoinTable(
+            name = "exam_enrollment",
+            joinColumns = @JoinColumn(name = "exam_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id")
+    )
+    private List<User> students;
 
 }

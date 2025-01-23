@@ -1,4 +1,4 @@
-package cms.project.model.dto.course;
+package cms.project.model.dto.course.request;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -10,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class EnrollRequest {
+public class CoursesEnrollmentDto {
     List<Long> courseIds;
 
 }

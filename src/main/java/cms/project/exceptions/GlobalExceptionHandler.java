@@ -19,7 +19,6 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleUserNotFoundException(UserNotFoundException exception) {
         ErrorResponse errorResponse = new ErrorResponse("NOT_FOUND", exception.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
-
     }
 
     @ExceptionHandler(UserEmailExistsException.class)
@@ -33,7 +32,6 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handlePasswordInvalidException(PasswordInvalidException exception) {
         ErrorResponse errorResponse = new ErrorResponse("BAD_REQUEST", exception.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
-
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -62,4 +60,29 @@ public class GlobalExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse("FORBIDDEN", ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
     }
+
+    @ExceptionHandler(NotFinishedExamException.class)
+    public ResponseEntity<ErrorResponse> handleNotFinishedExamException(NotFinishedExamException ex) {
+        ErrorResponse errorResponse = new ErrorResponse("BAD_REQUEST", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UnauthorizedAccessException.class)
+    public ResponseEntity<ErrorResponse> handleUnauthorizedAccessException(UnauthorizedAccessException ex) {
+        ErrorResponse errorResponse = new ErrorResponse("UNAUTHORIZED", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(ExamNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleExamNotFoundException(ExamNotFoundException ex) {
+        ErrorResponse errorResponse = new ErrorResponse("NOT_FOUND", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler(NotEnrolledInCourseException.class)
+    public ResponseEntity<ErrorResponse> handleNotEnrolledInCourseException(NotEnrolledInCourseException ex) {
+        ErrorResponse errorResponse = new ErrorResponse("BAD_REQUEST", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+
 }

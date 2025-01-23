@@ -1,21 +1,19 @@
 package cms.project.service.impl;
 
-import cms.project.entity.Course;
-import cms.project.entity.Exam;
-import cms.project.entity.Semester;
-import cms.project.entity.User;
+import cms.project.entity.*;
 import cms.project.enums.UserRole;
 import cms.project.exceptions.CourseNotFoundException;
+import cms.project.exceptions.NotFinishedExamException;
 import cms.project.exceptions.UnauthorizedTeacherException;
 import cms.project.exceptions.UserNotFoundException;
-import cms.project.model.dto.course.CourseDto;
-import cms.project.model.dto.course.ExamDto;
-import cms.project.repository.CourseRepository;
-import cms.project.repository.ExamRepository;
-import cms.project.repository.SemesterRepository;
-import cms.project.repository.UserRepository;
+import cms.project.model.dto.course.request.CourseDto;
+import cms.project.model.dto.course.request.ExamDto;
+import cms.project.model.dto.course.request.ScoreDto;
+import cms.project.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
 @Service
@@ -24,6 +22,7 @@ public class TeacherCourseService {
     private final CourseRepository courseRepository;
     private final SemesterRepository semesterRepository;
     private final ExamRepository examRepository;
+    private final ExamResultRepository examResultRepository;
 
 
     public void createCourse(CourseDto courseDto, String username) {
@@ -57,13 +56,13 @@ public class TeacherCourseService {
         Course course = courseRepository.findById(examDto.getCourseId())
                 .orElseThrow(() -> new CourseNotFoundException("Course not found"));
 
+        if (!teacher.getRole().equals(UserRole.TEACHER)) {
+            throw new RuntimeException("Only teachers can create exams");
+        }
         if (!teacher.getId().equals(course.getTeacher().getId())) {
             throw new UnauthorizedTeacherException("Only the teacher of the course can create an exam.");
         }
 
-        if (!teacher.getRole().equals(UserRole.TEACHER)) {
-            throw new RuntimeException("Only teachers can create courses");
-        }
 
         Exam exam = Exam.builder()
                 .examStartDate(examDto.getExamStartDate())
@@ -75,4 +74,39 @@ public class TeacherCourseService {
         examRepository.save(exam);
 
     }
+
+    public void gradeStudents(ScoreDto scoreDto, Long studentId, Long examId,  String username) {
+        User teacher = userRepository.findByEmail(username)
+                .orElseThrow(() -> new UserNotFoundException("Teacher not found"));
+
+        User student = userRepository.findById(studentId)
+                .orElseThrow(() -> new UserNotFoundException("Student not found"));
+
+        Exam exam = examRepository.findById(examId)
+                .orElseThrow(() -> new CourseNotFoundException("Exam not found"));
+
+
+        if (!teacher.getRole().equals(UserRole.TEACHER)) {
+            throw new RuntimeException("Only teachers can grade students");
+        }
+
+        if (!teacher.getId().equals(exam.getTeacher().getId())) {
+            throw new UnauthorizedTeacherException("Only the teacher of the exam can grade students");
+        }
+
+        if (exam.getExamEndDate().isAfter(java.time.LocalDateTime.now())) {
+            throw new NotFinishedExamException("Exam is not finished yet");
+        }
+
+        ExamResult result = ExamResult.builder()
+                .exam(exam)
+                .student(student)
+                .score(scoreDto.getScore())
+                .teacher(teacher)
+                .gradedAt(LocalDateTime.now())
+                .build();
+
+        examResultRepository.save(result);
+    }
+
 }
