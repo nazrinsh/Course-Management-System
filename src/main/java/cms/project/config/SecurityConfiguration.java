@@ -40,6 +40,6 @@ public class SecurityConfiguration {
     };
 
     public static String[] permitAll = {"/auth/**"};
-    public static String[] teacher = {"/course/createCourse", "/course/createExam"};
-    public static String[] student = {"/course/enroll"};
+    public static String[] teacher = {"/course/createCourse", "/course/createExam", "/course/grade/{examId}/student/{studentId}"};
+    public static String[] student = {"/course/enrollCourse", "/course/myEnrolledCourses", "/course/myEnrolledExams", "/course/enrollExam", "/course/enrollCourse", "/course/availableCourses"};
 }

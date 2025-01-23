@@ -1,13 +1,9 @@
-package cms.project.model.dto.course;
+package cms.project.model.dto.course.request;
 
-import cms.project.entity.Course;
-import cms.project.entity.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 

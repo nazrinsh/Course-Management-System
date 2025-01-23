@@ -17,12 +17,10 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long courseId;
-
-    @Column(nullable = false)
     String courseName;
 
     @ManyToOne
-    @JoinColumn(name = "teacher_id")
+    @JoinColumn(name = "teacher_id", nullable = false)
     User teacher;
 
     @ManyToMany
@@ -32,6 +30,7 @@ public class Course {
             inverseJoinColumns = @JoinColumn(name = "student_id")
     )
     private List<User> students;
+
 
     @ManyToOne
     @JoinColumn(name = "semester_id", nullable = false)

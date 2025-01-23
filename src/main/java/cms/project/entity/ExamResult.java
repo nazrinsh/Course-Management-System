@@ -1,9 +1,10 @@
 package cms.project.entity;
 
-import cms.project.enums.Semesters;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.time.LocalDateTime;
 
 @Builder
 @Entity
@@ -11,15 +12,22 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "Semester")
-public class Semester {
-
+@Table(name = "Exam_Results")
+public class ExamResult {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long semesterId;
+    Long id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "semester")
-    Semesters semester;
+    @ManyToOne
+    Exam exam;
 
+    @ManyToOne
+    User student;
+
+    Long score;
+
+    @ManyToOne
+    User teacher;
+
+    LocalDateTime gradedAt;
 }

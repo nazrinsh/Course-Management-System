@@ -1,7 +1,5 @@
-package cms.project.model.dto.course;
+package cms.project.model.dto.course.request;
 
-import cms.project.entity.Semester;
-import cms.project.entity.User;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
