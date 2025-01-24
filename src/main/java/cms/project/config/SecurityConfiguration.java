@@ -24,6 +24,7 @@ public class SecurityConfiguration {
                         .requestMatchers(permitAll).permitAll()
                         .requestMatchers(teacher).hasAuthority(UserRole.TEACHER.name())
                         .requestMatchers(student).hasAuthority(UserRole.STUDENT.name())
+                        .requestMatchers(admin).hasAuthority(UserRole.ADMIN.name())
                         .requestMatchers(permitSwagger).permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -39,7 +40,8 @@ public class SecurityConfiguration {
             "/webjars/**"
     };
 
-    public static String[] permitAll = {"/auth/**"};
+    public static String[] permitAll = {"/auth/**", "/user/info"};
+    public static String[] admin = {"/admin/**"};
     public static String[] teacher = {"/course/createCourse", "/course/createExam", "/course/grade/{examId}/student/{studentId}"};
     public static String[] student = {"/course/enrollCourse", "/course/myEnrolledCourses", "/course/myEnrolledExams", "/course/enrollExam", "/course/enrollCourse", "/course/availableCourses"};
 }
