@@ -1,0 +1,37 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-course-table
+      author: cms
+      changes:
+        - createTable:
+            tableName: courses
+            columns:
+              - column:
+                  name: course_id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: course_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: teacher_id
+                  type: BIGINT
+              - column:
+                  name: semester_id
+                  type: BIGINT
+        - addForeignKeyConstraint:
+            baseTableName: courses
+            baseColumnNames: teacher_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_courses_teacher
+        - addForeignKeyConstraint:
+            baseTableName: courses
+            baseColumnNames: semester_id
+            referencedTableName: semester
+            referencedColumnNames: semester_id
+            constraintName: fk_courses_semester

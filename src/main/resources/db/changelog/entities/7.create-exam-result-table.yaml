@@ -1,0 +1,49 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_exam_result_table
+      author: cms
+      changes:
+        - createTable:
+            tableName: exam_results
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: exam_id
+                  type: BIGINT
+              - column:
+                  name: student_id
+                  type: BIGINT
+              - column:
+                  name: score
+                  type: BIGINT
+              - column:
+                  name: teacher_id
+                  type: BIGINT
+              - column:
+                  name: graded_at
+                  type: TIMESTAMP
+        - addForeignKeyConstraint:
+            baseTableName: exam_results
+            baseColumnNames: exam_id
+            referencedTableName: exams
+            referencedColumnNames: exam_id
+            constraintName: fk_exam_results_exam
+
+        - addForeignKeyConstraint:
+            baseTableName: exam_results
+            baseColumnNames: student_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_exams_results_student
+        - addForeignKeyConstraint:
+            baseTableName: exam_results
+            baseColumnNames: teacher_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_exam_results_teacher
+
