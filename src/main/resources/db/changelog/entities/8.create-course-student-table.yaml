@@ -1,0 +1,27 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_course_student_table
+      author: cms
+      changes:
+        - createTable:
+            tableName: course_student
+            columns:
+              - column:
+                  name: student_id
+                  type: BIGINT
+              - column:
+                  name: course_id
+                  type: BIGINT
+        - addForeignKeyConstraint:
+            baseTableName: course_student
+            baseColumnNames: student_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_course_student_user
+
+        - addForeignKeyConstraint:
+            baseTableName: course_student
+            baseColumnNames: course_id
+            referencedTableName: courses
+            referencedColumnNames: course_id
+            constraintName: fk_course_student_course

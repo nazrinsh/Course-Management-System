@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: admin
+      id: insert-semester
       author: cms
       changes:
         - sql:

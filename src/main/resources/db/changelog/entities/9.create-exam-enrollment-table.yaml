@@ -1,0 +1,27 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_exam_enrollment_table
+      author: cms
+      changes:
+        - createTable:
+            tableName: exam_enrollment
+            columns:
+              - column:
+                  name: exam_id
+                  type: BIGINT
+              - column:
+                  name: student_id
+                  type: BIGINT
+        - addForeignKeyConstraint:
+            baseTableName: exam_enrollment
+            baseColumnNames: exam_id
+            referencedTableName: exams
+            referencedColumnNames: exam_id
+            constraintName: fk_exam_enrollment_exam
+
+        - addForeignKeyConstraint:
+            baseTableName: exam_enrollment
+            baseColumnNames: student_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_exam_enrollment_user

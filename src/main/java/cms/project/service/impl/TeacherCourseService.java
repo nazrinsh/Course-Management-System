@@ -1,6 +1,7 @@
 package cms.project.service.impl;
 
 import cms.project.entity.*;
+import cms.project.enums.Status;
 import cms.project.enums.UserRole;
 import cms.project.exceptions.CourseNotFoundException;
 import cms.project.exceptions.NotFinishedExamException;
@@ -29,6 +30,9 @@ public class TeacherCourseService {
         User teacher = userRepository.findByEmail(username)
                 .orElseThrow(() -> new UserNotFoundException("Teacher not found"));
 
+        if (!teacher.getStatus().equals(Status.APPROVED)) {
+            throw new UnauthorizedTeacherException("Your account hasn't been activated yet");
+        }
         if (!teacher.getRole().equals(UserRole.TEACHER)) {
             throw new RuntimeException("Only teachers can create courses");
         }
@@ -53,6 +57,10 @@ public class TeacherCourseService {
         User teacher = userRepository.findByEmail(username)
                 .orElseThrow(() -> new UserNotFoundException("Teacher not found"));
 
+        if (teacher.getStatus() == Status.PENDING || teacher.getStatus() == Status.REJECTED) {
+            throw new UnauthorizedTeacherException("Your account hasn't been activated yet");
+        }
+
         Course course = courseRepository.findById(examDto.getCourseId())
                 .orElseThrow(() -> new CourseNotFoundException("Course not found"));
 
@@ -75,9 +83,12 @@ public class TeacherCourseService {
 
     }
 
-    public void gradeStudents(ScoreDto scoreDto, Long studentId, Long examId,  String username) {
+    public void gradeStudents(ScoreDto scoreDto, Long studentId, Long examId, String username) {
         User teacher = userRepository.findByEmail(username)
                 .orElseThrow(() -> new UserNotFoundException("Teacher not found"));
+        if (teacher.getStatus() == Status.PENDING || teacher.getStatus() == Status.REJECTED) {
+            throw new UnauthorizedTeacherException("Your account hasn't been activated yet");
+        }
 
         User student = userRepository.findById(studentId)
                 .orElseThrow(() -> new UserNotFoundException("Student not found"));

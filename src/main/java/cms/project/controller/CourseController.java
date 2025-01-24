@@ -71,6 +71,8 @@ public class CourseController {
             String username = extractUsernameFromContext();
             teacherService.createCourse(courseDto, username);
             return ResponseEntity.ok("Course created successfully!");
+        } catch (UnauthorizedTeacherException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {

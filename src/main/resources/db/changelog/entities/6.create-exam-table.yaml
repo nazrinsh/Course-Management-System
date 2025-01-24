@@ -1,0 +1,41 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_exam_table
+      author: cms
+      changes:
+        - createTable:
+            tableName: exams
+            columns:
+              - column:
+                  name: exam_id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: exam_name
+                  type: VARCHAR(255)
+              - column:
+                  name: exam_start_date
+                  type: TIMESTAMP
+              - column:
+                  name: exam_end_date
+                  type: TIMESTAMP
+              - column:
+                  name: course_id
+                  type: BIGINT
+              - column:
+                  name: teacher_id
+                  type: BIGINT
+        - addForeignKeyConstraint:
+            baseTableName: exams
+            baseColumnNames: course_id
+            referencedTableName: courses
+            referencedColumnNames: course_id
+            constraintName: fk_exams_course
+        - addForeignKeyConstraint:
+            baseTableName: exams
+            baseColumnNames: teacher_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_exams_teacher
