@@ -3,10 +3,7 @@ package cms.project.service.impl;
 import cms.project.entity.*;
 import cms.project.enums.Status;
 import cms.project.enums.UserRole;
-import cms.project.exceptions.CourseNotFoundException;
-import cms.project.exceptions.NotFinishedExamException;
-import cms.project.exceptions.UnauthorizedTeacherException;
-import cms.project.exceptions.UserNotFoundException;
+import cms.project.exceptions.*;
 import cms.project.model.dto.course.request.CourseDto;
 import cms.project.model.dto.course.request.ExamDto;
 import cms.project.model.dto.course.request.ScoreDto;
@@ -42,7 +39,7 @@ public class TeacherCourseService {
         }
 
         Semester semester = semesterRepository.findById(courseDto.getSemesterId())
-                .orElseThrow(() -> new IllegalArgumentException("Semester not found"));
+                .orElseThrow(() -> new SemesterNotFoundException("Semester not found"));
 
         Course course = Course.builder()
                 .courseName(courseDto.getCourseName())
@@ -94,7 +91,7 @@ public class TeacherCourseService {
                 .orElseThrow(() -> new UserNotFoundException("Student not found"));
 
         Exam exam = examRepository.findById(examId)
-                .orElseThrow(() -> new CourseNotFoundException("Exam not found"));
+                .orElseThrow(() -> new ExamNotFoundException("Exam not found"));
 
 
         if (!teacher.getRole().equals(UserRole.TEACHER)) {

@@ -55,7 +55,7 @@ public class AuthService {
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new UserNotFoundException("Invalid username or password");
+            throw new InvalidPasswordException("Invalid username or password");
         }
 
         String accessToken = jwtService.generateToken(user);

@@ -28,7 +28,9 @@ public class SignUpRequest {
 
     @NotBlank(message = "Password cannot be blank")
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{7,}$",
-            message = "Password must be at least 7 characters long, contain at least one uppercase letter, one lowercase letter, and one number.")
+            message = "Password must be at least 7 characters long, " +
+                    "contain at least one uppercase letter, " +
+                    "one lowercase letter, and one number.")
     private String password;
 
     @NotBlank(message = "Repeat Password cannot be blank")
