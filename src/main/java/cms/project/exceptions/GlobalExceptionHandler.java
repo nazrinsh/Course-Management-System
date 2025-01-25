@@ -83,6 +83,16 @@ public class GlobalExceptionHandler {
         ErrorResponse errorResponse = new ErrorResponse("BAD_REQUEST", ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(InvalidPasswordException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidPasswordException(InvalidPasswordException ex) {
+        ErrorResponse errorResponse = new ErrorResponse("BAD_REQUEST", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
 
+    @ExceptionHandler(SemesterNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleSemesterNotFoundException(SemesterNotFoundException ex) {
+        ErrorResponse errorResponse = new ErrorResponse("NOT_FOUND", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
 
+    }
 }
