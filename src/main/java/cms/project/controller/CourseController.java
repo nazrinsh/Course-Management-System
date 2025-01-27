@@ -34,7 +34,7 @@ public class CourseController {
     }
 
 
-    @PostMapping("/enrollCourse")
+    @PostMapping("/enroll-course")
     public ResponseEntity<String> enrollCourse(@RequestBody CoursesEnrollmentDto enrollRequest) {
         try {
             String username = extractUsernameFromContext();
@@ -48,7 +48,7 @@ public class CourseController {
 
     }
 
-    @PostMapping("/enrollExam")
+    @PostMapping("/enroll-exam")
     public ResponseEntity<String> enrollExam(@RequestBody ExamsEnrollmentDto enrollRequest) {
         try {
             String username = extractUsernameFromContext();
@@ -62,7 +62,7 @@ public class CourseController {
     }
 
 
-    @PostMapping("/createCourse")
+    @PostMapping("/create-course")
     public ResponseEntity<String> createCourse(@Valid @RequestBody CourseDto courseDto) {
         if (courseDto == null || courseDto.getCourseName() == null || courseDto.getSemesterId() == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Could not create course");
@@ -80,7 +80,7 @@ public class CourseController {
         }
     }
 
-    @PostMapping("/createExam")
+    @PostMapping("/create-exam")
     public ResponseEntity<String> createExam(@RequestBody ExamDto examDto) {
         try {
             String username = extractUsernameFromContext();
@@ -110,28 +110,28 @@ public class CourseController {
         }
     }
 
-    @GetMapping("/myEnrolledCourses")
+    @GetMapping("/my-enrolled-courses")
     public ResponseEntity<List<CourseResponse>> myEnrolledCourses() {
         String username = extractUsernameFromContext();
         List<CourseResponse> courses = studentService.myEnrolledCourses(username);
         return ResponseEntity.ok(courses);
     }
 
-    @GetMapping("/myEnrolledExams")
+    @GetMapping("/my-enrolled-exams")
     public ResponseEntity<List<ExamResponse>> myEnrolledExams() {
         String username = extractUsernameFromContext();
         List<ExamResponse> exams = studentService.myEnrolledExams(username);
         return ResponseEntity.ok(exams);
     }
 
-    @GetMapping("/availableCourses")
+    @GetMapping("/available-courses")
     public ResponseEntity<List<CourseDto>> getAvailableCourses() {
         String username = extractUsernameFromContext();
         List<CourseDto> availableCourses = studentService.getAvailableCourses(username);
         return ResponseEntity.ok(availableCourses);
     }
 
-    @GetMapping("/myGrades/{examId}")
+    @GetMapping("/my-grades/{examId}")
     public ResponseEntity<GradeResponse> getMyGrades(@PathVariable Long examId) {
         String username = extractUsernameFromContext();
         GradeResponse grades = studentService.getGradeForExam(examId, username);
